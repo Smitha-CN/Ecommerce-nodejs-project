@@ -3,8 +3,10 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      python: 3.11  # Just to satisfy runtime requirement
+      python: 3.11
     commands:
+      - set -e
+      - set -x
       - echo Installing Terraform...
       - curl -fsSL https://releases.hashicorp.com/terraform/1.6.6/terraform_1.6.6_linux_amd64.zip -o terraform.zip
       - unzip terraform.zip
