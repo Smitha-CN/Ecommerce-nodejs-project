@@ -3,25 +3,24 @@ version: 0.2
 phases:
   install:
     commands:
-      - echo "Installing unzip and Terraform..."
-      - |
-        if command -v yum >/dev/null; then
-          yum install -y unzip curl
-        elif command -v apt-get >/dev/null; then
-          apt-get update && apt-get install -y unzip curl
-        else
-          echo "Unsupported package manager" && exit 1
-        fi
-      - curl -fSL https://releases.hashicorp.com/terraform/1.6.6/terraform_1.6.6_linux_amd64.zip -o terraform.zip
-      - unzip terraform.zip
+      - echo Installing unzip and curl...
+      - yum install -y unzip curl
+      - echo Downloading Terraform...
+      - curl -fsSL https://releases.hashicorp.com/terraform/1.6.0/terraform_1.6.0_linux_amd64.zip -o terraform.zip
+      - unzip -o terraform.zip
+      - chmod +x terraform
       - mv terraform /usr/local/bin/
       - terraform version
 
   pre_build:
     commands:
+      - cd terraform
       - terraform init
 
   build:
     commands:
       - terraform plan -out=tfplan
       - terraform apply -auto-approve tfplan
+
+artifacts:
+  files: []
