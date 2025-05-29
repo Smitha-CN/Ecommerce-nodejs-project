@@ -2,34 +2,30 @@ version: 0.2
 
 phases:
   install:
+    runtime-versions:
+      python: python3.8
+      # Add other runtime versions as needed
+    # Install Terraform
+    # You can use `aws codebuild build-environment` to get the current environment.
+    # If no environment variables are specified, you can specify a version number
+    # For example, runtime-versions: terraform: 1.1.0
     commands:
-      - echo "Installing unzip and curl..."
-      - if command -v yum >/dev/null; then yum install -y unzip curl; fi
-      - if command -v apt-get >/dev/null; then apt-get update && apt-get install -y unzip curl; fi
-
-      - echo "Downloading Terraform..."
-      - curl -fSL -o terraform.zip https://releases.hashicorp.com/terraform/1.6.6/terraform_1.6.6_linux_amd64.zip
-
-      - echo "Checking if terraform.zip was downloaded..."
-      - if [ ! -s terraform.zip ]; then echo "terraform.zip not found or empty, download failed!" && exit 1; fi
-
-      - echo "Unzipping Terraform..."
-      - unzip -o terraform.zip || (echo "Unzip failed. File is likely corrupt or missing." && exit 1)
-
-      - chmod +x terraform
-      - mv terraform /usr/local/bin/
-      - terraform version
-
-  pre_build:
-    commands:
-      - echo "Initializing Terraform..."
-      - cd terraform
-      - terraform init
-
+      - echo "Installing Terraform"
+      - echo "Fetching Terraform from AWS"
+      - curl -o terraform https://github.com/hashicorp/terraform/releases/download/v0.14.9/terraform_0.14.9_linux_amd64.zip
+      - unzip terraform.zip
+      - mv terraform /usr/local/bin/terraform
+      - chmod +x /usr/local/bin/terraform
   build:
     commands:
-      - terraform plan -out=tfplan
-      - terraform apply -auto-approve tfplan
-
-artifacts:
-  files: []
+      - echo "Building infrastructure..."
+      - echo "Initializing Terraform"
+      - terraform init
+      - echo "Planning changes"
+      - terraform plan
+      - echo "Applying changes"
+      - terraform apply -auto-approve
+  post_build:
+    commands:
+      - echo "Deployment complete!"
+      - echo "Cleaning up"
