@@ -7,12 +7,10 @@ variable "frontend_bucket_name" {
 }
 
 variable "vpc_id" {
-  description = "VPC ID"
+  type    = string
+  default = "vpc-0bb94a8477d40b0ff"
 }
 
-variable "subnet_id" {
-  description = "Public subnet ID"
-}
 
 variable "key_name" {
   description = "EC2 Key Pair"
