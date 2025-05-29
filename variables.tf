@@ -22,5 +22,5 @@ variable "key_name" {
 }
 
 variable "ec2_ami" {
-  default = "ami-0c02fb55956c7d316" # Amazon Linux 2 AMI (for example)
+  default = "ami-049ae37f76c31ab26" # Amazon Linux 2 AMI (for example)
 }
