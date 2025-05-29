@@ -12,7 +12,7 @@ variable "vpc_id" {
 }
 variable "subnet_id" {
   type    = string
-  default = "subnet-04c5dc8021ed0906d" # Replace with your actual default Subnet ID
+  default = "subnet-031917a2450079b73" # Replace with your actual default Subnet ID
 }
 
 
