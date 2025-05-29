@@ -11,7 +11,9 @@ phases:
       - echo "Unzipping Terraform..."
       - unzip -o terraform.zip
       - chmod +x terraform
-      - mv terraform /usr/local/bin/
+      - pwd
+      - ls
+      - mv terraform ~/usr/local/bin/
       - terraform version
 
   pre_build:
