@@ -17,48 +17,7 @@ resource "aws_s3_bucket" "frontend_bucket" {
 
 
 # CloudFront distribution for frontend
-resource "aws_cloudfront_distribution" "frontend_cdn" {
-  origin {
-    domain_name = aws_s3_bucket.frontend_bucket.website_endpoint
-    origin_id   = "frontendS3Origin"
-    custom_origin_config {
-      origin_protocol_policy = "http-only"
-      http_port              = 80
-      https_port             = 443
-      origin_ssl_protocols   = ["TLSv1", "TLSv1.1", "TLSv1.2"]
-    }
-  }
 
-  enabled             = true
-  is_ipv6_enabled     = true
-  default_root_object = "index.html"
-
-  default_cache_behavior {
-    allowed_methods  = ["GET", "HEAD"]
-    cached_methods   = ["GET", "HEAD"]
-    target_origin_id = "frontendS3Origin"
-
-    forwarded_values {
-      query_string = false
-
-      cookies {
-        forward = "none"
-      }
-    }
-
-    viewer_protocol_policy = "redirect-to-https"
-  }
-
-  restrictions {
-    geo_restriction {
-      restriction_type = "none"
-    }
-  }
-
-  viewer_certificate {
-    cloudfront_default_certificate = true
-  }
-}
 
 # Security Group for Backend
 resource "aws_security_group" "backend_sg" {
@@ -119,7 +78,7 @@ resource "aws_instance" "backend_instance" {
   instance_type          = "t2.micro"
   subnet_id              = var.subnet_id
   vpc_security_group_ids = [aws_security_group.backend_sg.id]
-  iam_instance_profile   = aws_iam_instance_profile.ec2_profile.name
+  
   key_name               = var.key_name
 
   user_data = file("user_data_backend.sh")
