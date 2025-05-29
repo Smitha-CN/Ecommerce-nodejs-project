@@ -10,6 +10,10 @@ variable "vpc_id" {
   type    = string
   default = "vpc-0bb94a8477d40b0ff"
 }
+variable "subnet_id" {
+  type    = string
+  default = "subnet-04c5dc8021ed0906d" # Replace with your actual default Subnet ID
+}
 
 
 variable "key_name" {
