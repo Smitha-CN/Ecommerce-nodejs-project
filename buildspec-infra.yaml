@@ -3,17 +3,16 @@ version: 0.2
 phases:
   install:
     commands:
-      - echo "Installing unzip and curl..."
-      - if command -v yum >/dev/null; then yum install -y unzip curl; fi
-      - if command -v apt-get >/dev/null; then apt-get update && apt-get install -y unzip curl; fi
+      - echo "Updating apt and installing unzip/curl..."
+      - apt-get update -y
+      - apt-get install -y unzip curl
       - echo "Downloading Terraform..."
       - curl -fsSL https://releases.hashicorp.com/terraform/1.6.6/terraform_1.6.6_linux_amd64.zip -o terraform.zip
-      - echo "Unzipping Terraform..."
       - unzip -o terraform.zip
       - chmod +x terraform
-      - pwd
-      - ls
       - mv terraform ~/usr/local/bin/
+      - ls
+      - pwd
       - terraform version
 
   pre_build:
