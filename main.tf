@@ -134,10 +134,7 @@ resource "aws_iam_role_policy_attachment" "ec2_attach" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonS3FullAccess"
 }
 
-resource "aws_iam_instance_profile" "ec2_profile" {
-  name = "ecomm-ec2-profile"
-  role = aws_iam_role.ec2_role.name
-}
+
 
 # Backend EC2 Instance
 resource "aws_instance" "backend_instance" {
