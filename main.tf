@@ -67,12 +67,12 @@ resource "aws_route_table_association" "assoc_us_east_1b" {
   subnet_id      = aws_subnet.subnet_us_east_1b.id
   route_table_id = aws_route_table.rtb_us_east_1.id
 }
-resource "aws_internet_gateway" "igw_us_west_2" {
-  provider = aws.us_west_2
-  vpc_id   = aws_vpc.vpc_us_west_2.id
+resource "aws_internet_gateway" "igw_us_east_1" {
+  provider = aws.us_east_1
+  vpc_id   = aws_vpc.vpc_us_east_1.id
 
   tags = {
-    Name = "igw-us-west-2"
+    Name = "igw-us-east-1"
   }
 }
 resource "aws_route" "route_internet_us_east_1" {
