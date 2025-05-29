@@ -1,0 +1,15 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 18
+    commands:
+      - cd backend
+      - npm install
+  build:
+    commands:
+      - zip -r app.zip .
+  post_build:
+    commands:
+      - aws s3 cp app.zip s3://your-backend-deploy-bucket/app.zip
