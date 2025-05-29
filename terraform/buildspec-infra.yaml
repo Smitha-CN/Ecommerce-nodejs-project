@@ -3,14 +3,30 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      python: 3.8
+      python: 3.11
     commands:
       - echo Installing unzip...
       - yum install -y unzip
-      - echo Downloading Terraform...
-      - curl -fSL https://releases.hashicorp.com/terraform/1.6.6/terraform_1.6.6_linux_amd64.zip -o terraform.zip
-      - echo Checking downloaded file...
-      - ls -lh terraform.zip
-      - unzip terraform.zip || (echo "Unzip failed. Download may have failed." && exit 1)
+      - echo Downloading Terraform binary...
+      - curl -s -L -o terraform.zip https://releases.hashicorp.com/terraform/1.6.0/terraform_1.6.0_linux_amd64.zip
+      - echo Removing any old terraform binary...
+      - rm -f terraform
+      - echo Unzipping Terraform...
+      - unzip -o terraform.zip
+      - chmod +x terraform
       - mv terraform /usr/local/bin/
+      - echo Installed Terraform version:
       - terraform version
+
+  pre_build:
+    commands:
+      - cd terraform
+      - terraform init
+
+  build:
+    commands:
+      - terraform plan -out=tfplan
+      - terraform apply -auto-approve tfplan
+
+artifacts:
+  files: []
