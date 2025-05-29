@@ -29,7 +29,7 @@ resource "aws_subnet" "subnet_us_east_1a" {
   provider                = aws.us_east_1
   vpc_id                  = aws_vpc.vpc_us_east_1.id
   cidr_block              = var.subnet_cidrs_us_east_1[0]
-  availability_zone       = "ap-south-1a"
+  availability_zone       = "ca-central-1a"
   map_public_ip_on_launch = true
 
   tags = {
@@ -41,7 +41,7 @@ resource "aws_subnet" "subnet_us_east_1b" {
   provider                = aws.us_east_1
   vpc_id                  = aws_vpc.vpc_us_east_1.id
   cidr_block              = var.subnet_cidrs_us_east_1[1]
-  availability_zone       = "ap-south-1b"
+  availability_zone       = "ca-central-1b"
   map_public_ip_on_launch = true
 
   tags = {
