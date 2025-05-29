@@ -1,4 +1,6 @@
-
+variable "aws_region" {
+  default = "ca-central-1"
+}
 
 variable "frontend_bucket_name" {
   default = "ecomm-frontend-site-demo"
