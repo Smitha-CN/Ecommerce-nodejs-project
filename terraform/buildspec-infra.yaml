@@ -3,19 +3,25 @@ version: 0.2
 phases:
   install:
     commands:
-      - echo "Detected Ubuntu environment. Updating apt..."
-      - apt-get update -y
-      - apt-get install -y unzip curl
+      - echo "Installing required packages..."
+      - apt-get update -y || yum update -y
+      - apt-get install -y unzip curl || yum install -y unzip curl
+
       - echo "Downloading Terraform..."
       - curl -fsSL https://releases.hashicorp.com/terraform/1.6.0/terraform_1.6.0_linux_amd64.zip -o terraform.zip
+
+      - echo "Checking if terraform.zip was downloaded..."
+      - test -f terraform.zip || (echo "Download failed or file missing!" && exit 1)
+
+      - echo "Unzipping Terraform..."
       - unzip -o terraform.zip
+
       - chmod +x terraform
       - mv terraform /usr/local/bin/
       - terraform version
 
   pre_build:
     commands:
-      - echo "Initializing Terraform..."
       - cd terraform
       - terraform init
 
