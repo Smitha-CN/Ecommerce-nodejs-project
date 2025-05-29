@@ -5,23 +5,12 @@ phases:
     runtime-versions:
       python: 3.8
     commands:
-      - echo "Installing dependencies..."
+      - echo Installing unzip...
       - yum install -y unzip
-      - echo "Downloading Terraform..."
-      - curl -fsSL https://releases.hashicorp.com/terraform/1.6.6/terraform_1.6.6_linux_amd64.zip -o terraform.zip
-      - unzip terraform.zip
+      - echo Downloading Terraform...
+      - curl -fSL https://releases.hashicorp.com/terraform/1.6.6/terraform_1.6.6_linux_amd64.zip -o terraform.zip
+      - echo Checking downloaded file...
+      - ls -lh terraform.zip
+      - unzip terraform.zip || (echo "Unzip failed. Download may have failed." && exit 1)
       - mv terraform /usr/local/bin/
       - terraform version
-
-  pre_build:
-    commands:
-      - echo "Changing to terraform directory..."
-      - cd terraform
-      - terraform init
-
-  build:
-    commands:
-      - echo "Planning Terraform..."
-      - terraform plan -out=tfplan
-      - echo "Applying Terraform..."
-      - terraform apply -auto-approve tfplan
