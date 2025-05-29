@@ -17,7 +17,8 @@ variable "subnet_id" {
 
 
 variable "key_name" {
-  description = "EC2 Key Pair"
+  type = string
+  default = "deee"
 }
 
 variable "ec2_ami" {
