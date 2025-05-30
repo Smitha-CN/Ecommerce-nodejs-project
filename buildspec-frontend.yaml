@@ -16,9 +16,11 @@ phases:
 
   post_build:
     commands:
-      - echo "Build complete. Checking contents of build/ folder:"
-      - ls -la build || echo "No build/ directory found"
-      - echo "Deploying to S3 bucket..."
+      - echo "Verifying AWS CLI identity..."
+      - aws sts get-caller-identity || echo "Cannot get identity"
+      - echo "Checking build directory..."
+      - ls -la build || echo "Build directory does not exist"
+      - echo "Deploying to S3..."
       - aws s3 sync build/ s3://my-unique-bucket-us-east-1-primary --delete
 
 artifacts:
