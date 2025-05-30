@@ -1,1 +1,13 @@
 
+# dependencies
+/node_modules
+
+# build output
+/build
+
+# local env files
+.env
+
+# misc
+.DS_Store
+npm-debug.log*
