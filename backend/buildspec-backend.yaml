@@ -13,7 +13,7 @@ phases:
       - aws ssm send-command \
           --document-name "AWS-RunShellScript" \
           --comment "Deploy backend" \
-          --instance-ids i-xxxxxxxxxxxxxxxxx \
+          --instance-ids i-0ecac24120acb836d \
           --parameters commands="cd /var/www/backend && git pull && pm2 restart all" \
           --region your-region
 artifacts:
