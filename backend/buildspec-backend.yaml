@@ -1,15 +1,20 @@
 version: 0.2
-
 phases:
   install:
     runtime-versions:
       nodejs: 18
     commands:
-      - cd backend
       - npm install
   build:
     commands:
-      - zip -r app.zip .
+      - echo "Build complete"
   post_build:
     commands:
-      - aws s3 cp app.zip s3://your-backend-deploy-bucket/app.zip
+      - aws ssm send-command \
+          --document-name "AWS-RunShellScript" \
+          --comment "Deploy backend" \
+          --instance-ids i-xxxxxxxxxxxxxxxxx \
+          --parameters commands="cd /var/www/backend && git pull && pm2 restart all" \
+          --region your-region
+artifacts:
+  files: []
