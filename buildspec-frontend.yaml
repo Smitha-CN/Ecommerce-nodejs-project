@@ -21,7 +21,7 @@ phases:
       - echo "Checking build directory..."
       - ls -la build || echo "Build directory does not exist"
       - echo "Deploying to S3..."
-      - aws s3 sync build/ s3://my-unique-bucket-us-east-1-primary --delete
+      - aws s3 sync build/ s3://my-unique-bucket-us-east-1-primary 
 
 artifacts:
   files: []
