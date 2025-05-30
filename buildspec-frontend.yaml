@@ -10,8 +10,15 @@ phases:
   build:
     commands:
       - npm run build
+      - ls -la
+      - ls -la build
+
   post_build:
     commands:
+    - echo "Current directory:" && pwd
+    - echo "Listing contents:" && ls -la
+    - echo "Contents of build/:" && ls -la build || echo "No build/ directory found"
+
       - aws s3 sync build/ s3://my-unique-bucket-us-east-1-primary --delete
 artifacts:
   files: []
