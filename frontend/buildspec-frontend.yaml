@@ -5,11 +5,15 @@ phases:
     runtime-versions:
       nodejs: 18
     commands:
-      - cd frontend
+      - echo "Installing frontend dependencies..."
       - npm install
   build:
     commands:
+      - echo "Building React app..."
       - npm run build
   post_build:
     commands:
-      - aws s3 sync build/ s3://your-frontend-bucket-name
+      - echo "Deploying to S3..."
+      - aws s3 sync build/ s3://my-unique-bucket-us-east-1-primary --delete
+artifacts:
+  files: []
