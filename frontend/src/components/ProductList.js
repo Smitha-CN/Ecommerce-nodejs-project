@@ -5,7 +5,7 @@ function ProductList() {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    axios.get('/api/products') // proxy to backend
+   axios.get("http://99.79.72.41:5000/api/products") // proxy to backend
       .then(res => setProducts(res.data))
       .catch(err => console.error(err));
   }, []);
