@@ -20,8 +20,8 @@ resource "aws_s3_bucket" "frontend_bucket" {
 
 
 # Security Group for Backend
-resource "aws_security_group" "backend_sg" {
-  name        = "backend-sg"
+resource "aws_security_group" "backend_sg1" {
+  name        = "backend-sg1"
   description = "Allow HTTP and SSH"
   vpc_id      = var.vpc_id
 
