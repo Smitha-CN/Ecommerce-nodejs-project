@@ -19,33 +19,7 @@ resource "aws_s3_bucket" "frontend_bucket" {
 # CloudFront distribution for frontend
 
 
-# Security Group for Backend
-resource "aws_security_group" "backend_sg1" {
-  name        = "backend-sg1"
-  description = "Allow HTTP and SSH"
-  vpc_id      = var.vpc_id
 
-  ingress {
-    from_port   = 5000
-    to_port     = 5000
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-}
 
 # IAM Role for EC2
 resource "aws_iam_role" "ec2_role" {
