@@ -14,7 +14,16 @@ force_destroy = true
 
   
 }
+resource "aws_s3_bucket" "product_images" {
+  bucket = "ecomm-product-images-bucket"
 
+  tags = {
+    Name        = "ProductImages"
+    Environment = "Dev"
+  }
+
+  force_destroy = true  # Optional: allows deletion even if objects exist
+}
 
 
 # IAM Role for EC2
