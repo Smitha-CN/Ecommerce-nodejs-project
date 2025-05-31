@@ -6,12 +6,15 @@ provider "aws" {
 resource "aws_s3_bucket" "frontend_bucket" {
   bucket = var.frontend_bucket_name
 
+lifecycle {
+    prevent_destroy = true
+  }
   website {
     index_document = "index.html"
     error_document = "index.html"
   }
 
-  force_destroy = true
+  
 }
 
 resource "aws_s3_bucket" "product_images" {
@@ -22,7 +25,9 @@ resource "aws_s3_bucket" "product_images" {
     Environment = "Dev"
   }
 
-  force_destroy = true 
+ lifecycle {
+    prevent_destroy = true
+  }
 }
 
 
