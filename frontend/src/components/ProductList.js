@@ -15,7 +15,7 @@ function ProductList() {
       <h2>Product List</h2>
       <ul>
         {products.map(p => (
-          <li key={p.id}>
+          <span key={p.id}>
             <img
               src={p.image_url}
               alt={p.name}
@@ -23,7 +23,7 @@ function ProductList() {
             />
             <br />
             {p.name} - ${p.price}
-          </li>
+          </span>
         ))}
       </ul>
     </div>
