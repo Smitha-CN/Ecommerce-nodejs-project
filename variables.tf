@@ -12,7 +12,7 @@ variable "vpc_id" {
 }
 variable "subnet_id" {
   type    = string
-  default = "subnet-031917a2450079b73" # Replace with your actual default Subnet ID
+  default = "subnet-031917a2450079b73" 
 }
 
 
@@ -22,5 +22,18 @@ variable "key_name" {
 }
 
 variable "ec2_ami" {
-  default = "ami-049ae37f76c31ab26" # Amazon Linux 2 AMI (for example)
+  default = "ami-049ae37f76c31ab26" 
 }
+variable "db_username" {
+  description = "Username for the RDS instance"
+  type        = string
+  default     = "admin" # You can change this
+}
+
+variable "db_password" {
+  description = "Password for the RDS instance"
+  type        = string
+  sensitive   = true
+  default     = "StrongPassword!" 
+}
+
