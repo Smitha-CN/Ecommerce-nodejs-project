@@ -1,15 +1,15 @@
 const express = require('express');
 const router = express.Router();
-
-// Mock product list
-const products = [
-  { id: 1, name: 'Laptop', price: 999 },
-  { id: 2, name: 'Smartphone', price: 599 },
-  { id: 3, name: 'Headphones', price: 199 }
-];
+const db = require('../db');
 
 router.get('/', (req, res) => {
-  res.json(products);
+  db.query('SELECT * FROM products', (err, results) => {
+    if (err) {
+      console.error('DB error:', err);
+      return res.status(500).json({ error: 'DB failed' });
+    }
+    res.json(results);
+  });
 });
 
 module.exports = router;
