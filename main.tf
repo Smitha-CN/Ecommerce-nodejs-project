@@ -51,7 +51,7 @@ resource "aws_instance" "backend_instance" {
   ami                    = var.ec2_ami
   instance_type          = "t2.micro"
   subnet_id              = var.subnet_id
-  vpc_security_group_ids = [aws_security_group.backend_sg.id]
+  
   
   key_name               = var.key_name
 
