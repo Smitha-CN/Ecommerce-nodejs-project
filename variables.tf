@@ -18,7 +18,7 @@ variable "db_subnet_ids" {
   type = list(string)
   default = [
     "subnet-031917a2450079b73", # in ca-central-1a
-    "subnet-0abc1234def567890"  # another subnet in ca-central-1b
+    "subnet-053701cf677dee3d9"  # another subnet in ca-central-1b
   ]
 }
 
