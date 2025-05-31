@@ -22,51 +22,10 @@ resource "aws_s3_bucket" "product_images" {
     Environment = "Dev"
   }
 
-  force_destroy = true  # Optional: allows deletion even if objects exist
-}
-
-# Optional: Enable public access block
-resource "aws_s3_bucket_public_access_block" "block" {
-  bucket = aws_s3_bucket.product_images.id
-
-  block_public_acls       = false
-  block_public_policy     = false
-  ignore_public_acls      = false
-  restrict_public_buckets = false
-}
-
-# Optional: Bucket policy to allow public read access (for images)
-resource "aws_s3_bucket_policy" "public_read" {
-  bucket = aws_s3_bucket.product_images.id
-
-  policy = jsonencode({
-    Version = "2012-10-17",
-    Statement = [
-      {
-        Sid       = "PublicReadGetObject",
-        Effect    = "Allow",
-        Principal = "*",
-        Action    = "s3:GetObject",
-        Resource  = "${aws_s3_bucket.product_images.arn}/*"
-      }
-    ]
-  })
-}
-
-# Optional: CORS configuration (to allow frontend access)
-resource "aws_s3_bucket_cors_configuration" "cors" {
-  bucket = aws_s3_bucket.product_images.id
-
-  cors_rule {
-    allowed_headers = ["*"]
-    allowed_methods = ["GET", "POST", "PUT"]
-    allowed_origins = ["*"]
-    max_age_seconds = 3000
-  }
+  force_destroy = true 
 }
 
 
-# CloudFront distribution for frontend
 
 
 
