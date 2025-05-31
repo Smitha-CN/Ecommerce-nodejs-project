@@ -88,25 +88,17 @@ resource "aws_instance" "backend_instance" {
   }
 }
 # rDS
-resource "aws_db_subnet_group" "rds_subnet_group" {
-  name       = "rds-subnet-group"
-  subnet_ids = var.private_subnet_ids
-
-  tags = {
-    Name = "RDS Subnet Group"
-  }
-}
-
+# Security Group for RDS
 resource "aws_security_group" "rds_sg" {
   name        = "rds-sg"
   description = "Allow MySQL access"
   vpc_id      = var.vpc_id
 
   ingress {
-    from_port       = 3306
-    to_port         = 3306
-    protocol        = "tcp"
-    security_groups = [aws_security_group.backend_sg.id] # backend EC2 SG
+    from_port   = 3306
+    to_port     = 3306
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"] # Open to all for demo (restrict in production)
   }
 
   egress {
@@ -117,28 +109,37 @@ resource "aws_security_group" "rds_sg" {
   }
 
   tags = {
-    Name = "RDS security group"
+    Name = "rds-sg"
   }
 }
 
-resource "aws_db_instance" "ecomm_rds" {
+# DB Subnet Group (can use the same public subnet multiple times)
+resource "aws_db_subnet_group" "rds_subnet_group" {
+  name       = "rds-subnet-group"
+  subnet_ids = [var.subnet_id] # use the same subnet twice if needed
+
+  tags = {
+    Name = "rds-subnet-group"
+  }
+}
+
+# RDS Instance
+resource "aws_db_instance" "rds_instance" {
   identifier              = "ecomm-db"
-  allocated_storage       = 20
-  storage_type            = "gp2"
   engine                  = "mysql"
   engine_version          = "8.0"
   instance_class          = "db.t3.micro"
-  name                    = "ecommerce"
+  allocated_storage       = 20
   username                = var.db_username
   password                = var.db_password
-  port                    = 3306
   db_subnet_group_name    = aws_db_subnet_group.rds_subnet_group.name
   vpc_security_group_ids  = [aws_security_group.rds_sg.id]
-  skip_final_snapshot     = true
   publicly_accessible     = true
+  skip_final_snapshot     = true
 
   tags = {
-    Name = "ECommerce RDS DB"
+    Name = "ecomm-rds"
   }
 }
+
 
