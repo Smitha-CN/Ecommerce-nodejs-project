@@ -116,12 +116,13 @@ resource "aws_security_group" "rds_sg" {
 # DB Subnet Group (can use the same public subnet multiple times)
 resource "aws_db_subnet_group" "rds_subnet_group" {
   name       = "rds-subnet-group"
-  subnet_ids = [var.subnet_id] # use the same subnet twice if needed
+  subnet_ids = var.db_subnet_ids
 
   tags = {
-    Name = "rds-subnet-group"
+    Name = "RDS Subnet Group"
   }
 }
+
 
 # RDS Instance
 resource "aws_db_instance" "rds_instance" {
