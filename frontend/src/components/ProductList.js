@@ -16,6 +16,12 @@ function ProductList() {
       <ul>
         {products.map(p => (
           <li key={p.id}>
+            <img
+              src={p.image_url}
+              alt={p.name}
+              style={{ width: '100px', height: '100px', objectFit: 'cover' }}
+            />
+            <br />
             {p.name} - ${p.price}
           </li>
         ))}
