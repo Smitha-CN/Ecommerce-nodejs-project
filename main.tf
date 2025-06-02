@@ -24,10 +24,7 @@ resource "aws_s3_bucket" "frontend_bucket" {
 # IAM Role for EC2
 
 
-resource "aws_iam_role_policy_attachment" "ec2_attach" {
-  role       = aws_iam_role.ec2_role.name
-  policy_arn = "arn:aws:iam::aws:policy/AmazonS3FullAccess"
-}
+
 
 
 
