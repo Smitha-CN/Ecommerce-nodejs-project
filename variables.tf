@@ -3,7 +3,7 @@ variable "aws_region" {
 }
 
 variable "frontend_bucket_name" {
-  default = "ecomm-frontend-site-demo"
+  default = "www.smithaproperties.com"
 }
 
 variable "vpc_id" {
