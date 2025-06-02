@@ -22,22 +22,7 @@ resource "aws_s3_bucket" "frontend_bucket" {
 
 
 # IAM Role for EC2
-resource "aws_iam_role" "ec2_role" {
-  name = "ecomm-ec2-role"
 
-  assume_role_policy = jsonencode({
-    Version = "2012-10-17",
-    Statement = [
-      {
-        Action    = "sts:AssumeRole",
-        Effect    = "Allow",
-        Principal = {
-          Service = "ec2.amazonaws.com"
-        }
-      }
-    ]
-  })
-}
 
 resource "aws_iam_role_policy_attachment" "ec2_attach" {
   role       = aws_iam_role.ec2_role.name
@@ -47,7 +32,7 @@ resource "aws_iam_role_policy_attachment" "ec2_attach" {
 
 
 # Backend EC2 Instance
-resource "aws_instance" "backend_instance" {
+resource "aws_instance" "backend_instance1" {
   ami                    = var.ec2_ami
   instance_type          = "t2.micro"
   subnet_id              = var.subnet_id
@@ -58,6 +43,6 @@ resource "aws_instance" "backend_instance" {
   user_data = file("user_data_backend.sh")
 
   tags = {
-    Name = "ecomm-backend"
+    Name = "ecomm-backend1"
   }
 }
