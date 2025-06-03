@@ -9,6 +9,7 @@ Automate the deployment of a scalable, secure, and observable e-commerce web app
 ## 🏗️ Architecture Overview
 
 This project integrates several AWS services to build a robust, production-ready deployment:
+![Image](https://github.com/user-attachments/assets/67ac9b04-6848-4fda-9590-637f896e1c5b)
 
 - **Frontend**: React.js hosted on **Amazon S3** (Static Website Hosting)
 - **Backend**: Node.js with Express running on **Amazon EC2**
