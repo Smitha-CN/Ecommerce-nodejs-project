@@ -104,7 +104,4 @@ This project integrates several AWS services to build a robust, production-ready
 - Centralized monitoring and logging through CloudWatch
 - Scalable, secure, and easily deployable e-commerce web app architecture
 
----
-
-## 📁 Repository Structure
 
