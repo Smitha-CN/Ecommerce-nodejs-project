@@ -1,4 +1,4 @@
-# sampleE-Commerce WebApp DevOps on AWS
+E-Commerce WebApp DevOps on AWS
 This project demonstrates an end-to-end DevOps pipeline to deploy a 3-tier e-commerce application using AWS infrastructure, Terraform, React, Node.js, and AWS DevOps services.
 
 🚀 Objective
