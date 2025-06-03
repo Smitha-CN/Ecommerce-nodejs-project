@@ -115,6 +115,29 @@ resource "aws_instance" "backend_instance" {
     Name = "ecomm-backend"
   }
 }
+
+#RDS
+resource "aws_db_instance" "rds_primary" {
+ 
+  identifier             = "rds_primary"
+  engine                 = "mysql"
+  engine_version         = "8.0"
+  instance_class         = "db.t3.micro"
+  allocated_storage      = 20
+  username               = "admin"
+  password               = "securepass123"  
+  db_subnet_group_name   = aws_db_subnet_group.rds_subnet_group_use1.name
+  vpc_security_group_ids = [aws_security_group.backend_sg.id]
+  skip_final_snapshot    = true
+  backup_retention_period = 7
+  publicly_accessible    = true
+  multi_az               = false
+
+  tags = {
+    Name = "rds-primary"
+    }
+    
+}
 # cloudwatch
 resource "aws_cloudwatch_metric_alarm" "high_cpu" {
   alarm_name          = "HighCPUUtilization"
