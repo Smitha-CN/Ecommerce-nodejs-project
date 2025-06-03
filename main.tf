@@ -92,24 +92,16 @@ resource "aws_route53_record" "frontend_alias" {
   type    = "A"
 
   alias {
-    name                   = "s3-website.ca-central-1.amazonaws.com" # Your region’s website endpoint
-    zone_id                = "Z1QDHH18159H29"                        # S3 Website endpoint Zone ID for ca-central-1
+    name                   = "s3-website.ca-central-1.amazonaws.com" 
+    zone_id                = "Z1QDHH18159H29"                       
     evaluate_target_health = false
   }
 }
 
 
 
-
-# IAM Role for EC2
-
-
-
-
-
-
 # Backend EC2 Instance
-resource "aws_instance" "backend_instance1" {
+resource "aws_instance" "backend_instance" {
   ami                    = var.ec2_ami
   instance_type          = "t2.micro"
   subnet_id              = var.subnet_id
@@ -120,6 +112,36 @@ resource "aws_instance" "backend_instance1" {
   user_data = file("user_data_backend.sh")
 
   tags = {
-    Name = "ecomm-backend1"
+    Name = "ecomm-backend"
   }
 }
+# cloudwatch
+resource "aws_cloudwatch_metric_alarm" "high_cpu" {
+  alarm_name          = "HighCPUUtilization"
+  comparison_operator = "GreaterThanThreshold"
+  evaluation_periods  = 2
+  metric_name         = "CPUUtilization"
+  namespace           = "AWS/EC2"
+  period              = 300
+  statistic           = "Average"
+  threshold           = 70
+  alarm_description   = "Alarm when EC2 CPU exceeds 70%"
+  treat_missing_data  = "notBreaching"
+
+  dimensions = {
+    InstanceId = aws_instance.backend_instance.id
+  }
+
+  alarm_actions = [aws_sns_topic.alerts.arn]
+}
+resource "aws_sns_topic" "alerts" {
+  name = "ec2-alerts"
+}
+
+resource "aws_sns_topic_subscription" "email" {
+  topic_arn = aws_sns_topic.alerts.arn
+  protocol  = "email"
+  endpoint  = "smithamalthi@gmail.com"  
+}
+
+
