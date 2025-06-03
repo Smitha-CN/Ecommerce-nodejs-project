@@ -1,125 +1,110 @@
-E-Commerce WebApp DevOps on AWS
-This project demonstrates an end-to-end DevOps pipeline to deploy a 3-tier e-commerce application using AWS infrastructure, Terraform, React, Node.js, and AWS DevOps services.
+# E-Commerce WebApp DevOps Implementation on AWS
 
-🚀 Objective
-Automate the deployment of an e-commerce web application with:
+## 📌 Project Objective
 
-Scalability
+Automate the deployment of a scalable, secure, and observable e-commerce web application using AWS services and DevOps best practices.
 
-Security
+---
 
-Observability
+## 🏗️ Architecture Overview
 
-Multi-region high availability
+This project integrates several AWS services to build a robust, production-ready deployment:
 
-🏗️ Architecture Overview
-Frontend: React.js hosted on S3 (static website hosting)
+- **Frontend**: React.js hosted on **Amazon S3** (Static Website Hosting)
+- **Backend**: Node.js with Express running on **Amazon EC2**
+- **Database**: **Amazon RDS** (MySQL)
+- **Monitoring**: **Amazon CloudWatch** for logging and CPU monitoring
+- **CI/CD**: **AWS CodePipeline** and **CodeBuild** integrated with **GitHub**
+- **DNS & CDN**: **Amazon Route 53** pointing to S3 static website
+- **Infrastructure as Code**: **Terraform**
 
-Backend: Node.js (Express) hosted on EC2
+---
 
-Database: Amazon RDS (MySQL), optionally with read-replica
+## ⚙️ Tech Stack
 
-DNS: Amazon Route 53
+| Layer        | Technology            |
+|--------------|------------------------|
+| Frontend     | React.js               |
+| Backend      | Node.js + Express      |
+| Database     | Amazon RDS (MySQL)     |
+| Hosting      | Amazon S3, EC2         |
+| DevOps Tools | GitHub, CodePipeline, CodeBuild |
+| Monitoring   | Amazon CloudWatch      |
+| DNS          | Amazon Route 53        |
+| IaC          | Terraform              |
 
-CI/CD: GitHub → AWS CodePipeline → AWS CodeBuild
+---
 
-Monitoring: AWS CloudWatch
+## 🚀 Deployment Workflow
 
-IAM: Granular roles for CodePipeline, S3, EC2, and CodeBuild
+### Step 1: Infrastructure Provisioning (Terraform)
 
-Security: Security Groups, IAM policies
+- Created S3 buckets and bucket policies
+- Defined AWS providers and regions
+- Created IAM roles, EC2 instances, and security groups
+- Created RDS and connected it using SQLectron (for table/data setup)
+- Created CloudWatch Alarms (CPU Utilization)
+- Configured Route 53 Hosted Zones
 
-🛠️ Tech Stack
-Layer	Technology
-Frontend	React.js
-Backend	Node.js (Express)
-Database	Amazon RDS (MySQL)
-Storage	Amazon S3
-DNS	Amazon Route 53
-Monitoring	Amazon CloudWatch
-DevOps	Terraform, CodePipeline, CodeBuild
-Repo	GitHub
+### Step 2: CI/CD Pipeline
 
-📂 Folder Structure
-bash
-Copy
-Edit
-project-root/
-├── terraform/
-│   ├── main.tf
-│   ├── variables.tf
-│   └── outputs.tf
-├── frontend/
-│   ├── public/
-│   ├── src/
-│   ├── .env
-│   └── buildspec-frontend.yml
-├── backend/
-│   ├── routes/
-│   ├── models/
-│   ├── server.js
-│   └── buildspec-backend.yml
-├── buildspec-infra.yml
-└── README.md
-⚙️ Deployment Steps
-Step 1: Infrastructure with Terraform
-Create:
+- Initialized GitHub repository and committed Terraform & app code
+- Configured 3 CodePipelines:
+  - **Infrastructure Deployment**
+  - **Frontend Deployment**
+  - **Backend Deployment**
+- Created separate `buildspec.yml` files for:
+  - Infrastructure
+  - Frontend
+  - Backend
 
-VPCs, Subnets, Route Tables
+### Step 3: Monitoring & Alerts
 
-EC2 instances with IAM roles and security groups
+- Enabled CloudWatch metrics and logs for EC2 and RDS
+- Setup CloudWatch Alarms for CPU Utilization
 
-S3 buckets with policies
+### Step 4: Testing & Validation
 
-RDS instance and optionally a read replica
+- Verified frontend via S3 static website URL
+- Verified backend API through `/api/ProductList.js`
+- Ensured database connectivity via `.env` setup for RDS
+- Verified Route 53 alias record pointing to S3 website
 
-Route53 records
+---
 
-IAM roles for CodePipeline and CodeBuild
+## 📡 Domain & Routing
 
-Step 2: CI/CD Pipeline Setup
-Use GitHub as the source.
+- Configured **Route 53** with A records aliasing to the S3 static website URL
+- Health checks and failover (if applicable) can be configured via Route 53
 
-Three CodePipelines:
+---
 
-infra-pipeline using buildspec-infra.yml
+## 📈 Monitoring
 
-frontend-pipeline using buildspec-frontend.yml
+- CloudWatch enabled for:
+  - EC2 CPU Utilization
+  - RDS logs
+  - Application logs (if configured)
 
-backend-pipeline using buildspec-backend.yml
+---
 
-Step 3: Monitoring & Security
-CloudWatch alarms:
+## 🧪 Validation
 
-EC2 CPU Utilization
+- Frontend accessible via S3 static website link
+- Backend reachable via public EC2 IP or domain routing
+- Database connected and tested using API endpoints
 
-RDS Replica Lag
+---
 
-Enable CloudWatch logs for EC2 and RDS.
+## ✅ Conclusion
 
-Add IAM policies for least-privilege access.
+- Full AWS-powered DevOps lifecycle implemented
+- CodePipeline-based CI/CD from GitHub to AWS
+- Infrastructure managed via Terraform
+- Centralized monitoring and logging through CloudWatch
+- Scalable, secure, and easily deployable e-commerce web app architecture
 
-🔍 Testing & Validation
-Frontend is accessible at:
-http://<S3-static-website-endpoint>
+---
 
-Backend API tested via:
+## 📁 Repository Structure
 
-nginx
-Copy
-Edit
-curl http://<EC2-IP>:3000/api/products
-Database access tested via SQL client (e.g., SQLectron).
-
-Route 53 provides DNS failover to healthy endpoints.
-
-✅ Conclusion
-🏗️ Infrastructure as Code via Terraform
-
-🔁 Automated deployments via AWS CodePipeline
-
-🔐 IAM and security best practices
-
-📈 Monitoring with CloudWatch
-
-🌍 Multi-region design ready
